@@ -1,0 +1,34 @@
+class OrientTowardsVelocity2D : ScriptComponent
+{
+    //An offset for the object's rotation in degrees.
+    [Property]
+    var DegreeOffset : Real = 0.0;
+    
+    constructor() : base()
+    {
+    }
+
+    function Initialize(init : CogInitializer)
+    {
+        Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
+    }
+    
+    function OnLogicUpdate(updateEvent : UpdateEvent)
+    {
+        var vel = this.Owner.RigidBody.Velocity;
+        
+        //If we don't do this check and for some reason get a zero velocity
+        //vector then our object will snap to 0 degrees. This would cause a
+        //non moving object with a rotation of 90 degrees to snap to 0 degrees all of a sudden.
+        if(Math.Length(vel) < 0.0001)
+        {
+            return;
+        }
+        
+        var radians = Math.ATan2(-vel.X, vel.Y);
+        //offset to include our initial offset (make sure to convert to radians)
+        radians += Math.ToRadians(this.DegreeOffset);
+        //set the new rotation
+        this.Owner.Transform.SetEulerAnglesXYZ(0.0, 0.0, radians);
+    }
+}

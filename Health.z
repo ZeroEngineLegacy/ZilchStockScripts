@@ -1,0 +1,42 @@
+class Health : ScriptComponent
+{
+    //The max health we can have
+    [Property]
+    var MaxHealth : Real = 50.0;
+    var CurrentHealth : Real = 50.0;
+    
+    //If we reach zero health should we call destroy on ourself?
+    [Property]
+    var DestroyAtZeroHealth : Boolean = true;
+    
+    constructor() : base()
+    {
+    }
+    
+    function Initialize(init : CogInitializer)
+    {
+        this.CurrentHealth = this.MaxHealth;
+    }
+    
+    function ApplyDamage(damage : Real)
+    {
+        this.CurrentHealth -= damage;
+        //clamp our current health (in my case I don't want to have
+        //to heal through negative health so I clamp to 0)
+        this.CurrentHealth = Math.Clamp(this.CurrentHealth, 0.0, this.MaxHealth);
+        
+        //if we have no health
+        if(this.CurrentHealth <= 0.0)
+        {
+            //let anyone listening know we just died
+            var toSend = new Event();
+            this.Owner.DispatchEvent("Death", toSend);
+            
+            //and if the property is set destroy ourself
+            if(this.DestroyAtZeroHealth)
+            {
+                this.Owner.Destroy();
+            }
+        }
+    }
+}

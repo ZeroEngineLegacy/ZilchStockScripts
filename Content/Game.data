@@ -1,0 +1,19 @@
+GameSession = 
+{
+	LinkId = 
+	{
+		uint Id = 1,
+	},
+	Archetyped = 
+	{
+		string Name = "532e2a5971d1b1ee:Game",
+	},
+	Viewports = 
+	{
+	},
+	DefaultGameSetup = 
+	{
+		string StartingSpaceName = "532e2a5971d21139:Space",
+		string StartingLevelName = "532e2a5971d1e24d:Level",
+	},
+},
