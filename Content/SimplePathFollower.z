@@ -58,10 +58,7 @@ class SimplePathFollower : ZilchComponent
     function Initialize(init : CogInitializer)
     {
         Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
-    }
-    
-    function OnAllObjectsCreated()
-    {
+        
         this.FindPath();
         
         // Grab the first point from the path along with its tangent direction

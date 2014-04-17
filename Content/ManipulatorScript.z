@@ -27,7 +27,7 @@ class ManipulatorScript : ZilchComponent
     {
     }
     
-    function OnAllObjectsCreated()
+    function Initialize(initializer : CogInitializer)
     {
         //we only operator on a component with a camera viewport,
         //grab the viewport from that component

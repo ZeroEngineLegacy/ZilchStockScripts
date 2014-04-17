@@ -3,6 +3,7 @@ ContentLibrary =
 	string Name = "ZilchStockScripts",
 	Array Files = 
 	[
+		"BasicParticleSystem.Archetype.data",
 		"BasicRaycaster.z",
 		"Bullet.Archetype.data",
 		"CharacterInput.z",
@@ -20,6 +21,7 @@ ContentLibrary =
 		"ObjectSpawnerScript.z",
 		"OrbitCamera.z",
 		"OrientTowardsVelocity2D.z",
+		"Pathlevel.Level.data",
 		"PlatformerCharacterController.z",
 		"QuaternionCamera.z",
 		"RunTest.py",

@@ -15,7 +15,7 @@ Level =
 			bool Active = true,
 			bool WakeUpOnChange = false,
 			bool LocalSpaceDirection = true,
-			float Strength = 10,
+			float Strength = 5,
 			Vec3 Direction = [0, -1, 0],
 		},
 		DragEffect = 
@@ -165,6 +165,18 @@ Level =
 			float MaxHealth = 1,
 			bool DestroyAtZeroHealth = true,
 		},
+		HudCreator = 
+		{
+			string HudLevel = "532d6baab5a6d3b7:PathLevel",
+			string SpaceArchetype = "532e2a5971d21139:Space",
+		},
+		ObjectSpawnerScript = 
+		{
+			int Count = 10,
+			float Delay = 0.1,
+			Vec3 Velocity = [0, 0, 0],
+			string ArchetypeToSpawn = "532d9d13f92dbcf9:BasicParticleSystem",
+		},
 	},
 	Cog = 
 	{
@@ -178,7 +190,7 @@ Level =
 		},
 		Transform = 
 		{
-			Vec3 Translation = [0, 5.98183, 0],
+			Vec3 Translation = [0, 11.0607, 0],
 			Vec3 Scale = [1, 1, 1],
 			Quat Rotation = [0, 0, 0, 1],
 		},

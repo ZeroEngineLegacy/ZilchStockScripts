@@ -37,7 +37,7 @@ class QuaternionCamera : ZilchComponent
     {
     }
     
-    function OnAllObjectsCreated()
+    function Initialize(initializer : CogInitializer)
     {
         //get the viewport so we can listen to mouse events
         var viewport = this.Owner.Camera.Viewport;
