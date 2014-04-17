@@ -1,8 +1,0 @@
-class Traction : ScriptComponent
-{
-    [Property]
-    var Traction : Real = 1.0;
-    constructor() : base()
-    {
-    }
-}
