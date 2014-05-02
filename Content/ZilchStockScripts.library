@@ -6,6 +6,7 @@ ContentLibrary =
 		"BasicParticleSystem.Archetype.data",
 		"BasicRaycaster.z",
 		"Bullet.Archetype.data",
+		"CameraGroupFocus.z",
 		"CharacterInput.z",
 		"ContactDebugDraw.z",
 		"CreateOnDestroy.z",

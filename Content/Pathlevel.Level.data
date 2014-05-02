@@ -110,15 +110,6 @@ Level =
 			float FarPlane = 200,
 			float Size = 33.6,
 		},
-		QuaternionCamera = 
-		{
-			float Speed = 8,
-			float LookSpeed = 0.005,
-			bool RunWhilePaused = true,
-			bool AllowRotation = true,
-			bool AllowTranslation = true,
-			bool MouseTrapped = false,
-		},
 		ManipulatorScript = 
 		{
 			bool LockRotation = false,
@@ -127,6 +118,28 @@ Level =
 		},
 		TimeControlScript = 
 		{
+		},
+		CameraGroupFocus = 
+		{
+			string FirstTarget = ":/FollowCube",
+			Vec3 PlaneNormal = [0, 0, -1],
+			float PlaneDistanceScalar = 1,
+			float PlaneDistanceConstant = 10,
+			float MinDistance = 20,
+			float Smoothness = 0.6,
+			float TranslationSmoothness = 0.1,
+			Vec3 PositionOffset = [0, 0, 0],
+			bool ControlsOffset = true,
+			bool ControlsOrientation = true,
+		},
+		QuaternionCamera = 
+		{
+			float Speed = 8,
+			float LookSpeed = 0.005,
+			bool RunWhilePaused = true,
+			bool AllowRotation = true,
+			bool AllowTranslation = true,
+			bool MouseTrapped = false,
 		},
 	},
 	Cog = 
@@ -201,11 +214,11 @@ Level =
 		},
 		Named = 
 		{
-			string Name = "Cube",
+			string Name = "FollowCube",
 		},
 		Transform = 
 		{
-			Vec3 Translation = [-1.58071, 0, 0],
+			Vec3 Translation = [-1.3635, 0, 0],
 			Vec3 Scale = [1, 1, 1],
 			Quat Rotation = [0, 0, 0, 1],
 		},
@@ -254,6 +267,7 @@ Level =
 		{
 			Vec3 UpVector = [0, 1, 0],
 			Vec3 ForwardVector = [0, 0, 1],
+			OrientationBases DefaultBases = ForwardZUpY,
 		},
 		BasicRaycaster = 
 		{
