@@ -104,7 +104,6 @@ class CameraGroupFocus : ZilchComponent
         //Set the new camera position
         cameraPos += this.PlaneNormal * -(dist - this.CurrDistance);
         myTransform.Translation = cameraPos;
-        Console.WriteLine(cameraPos);
         
         if(this.ControlsOrientation)
         {
@@ -149,14 +148,14 @@ class CameraGroupFocus : ZilchComponent
         //Initialize the aabb to the first object's position
         var aabb = new Aabb();
         var obj = this.Objects.Get(0);
-        var pos = obj.Transform.Translation;
+        var pos = obj.Transform.WorldTranslation;
         aabb.Set(pos);
         
         //Expand the aabb by every object's position
         for(var i = 1; i < this.Objects.Count; ++i)
         {
             obj = this.Objects.Get(i);
-            pos = obj.Transform.Translation;
+            pos = obj.Transform.WorldTranslation;
             aabb.Expand(pos);
         }
         return aabb;
