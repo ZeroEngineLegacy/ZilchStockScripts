@@ -34,8 +34,8 @@ class ManipulatorScript : ZilchComponent
         var viewport = this.Owner.Camera.Viewport;
         
         Zero.Connect(viewport, Events.MouseMove, this.OnMouseMove);
-        Zero.Connect(viewport, Events.MouseDown, this.OnMouseDown);
-        Zero.Connect(viewport, Events.MouseUp, this.OnMouseUp);
+        Zero.Connect(viewport, Events.LeftMouseDown, this.OnLeftMouseDown);
+        Zero.Connect(viewport, Events.LeftMouseUp, this.OnLeftMouseUp);
         Zero.Connect(viewport, Events.MouseScroll, this.OnMouseScroll);
         Zero.Connect(Zero.Keyboard, Events.KeyDown, this.OnKeyDown);
     }
@@ -62,7 +62,7 @@ class ManipulatorScript : ZilchComponent
         this.UpdateDraggedObject(viewportMouseEvent);
     }
     
-    function OnMouseDown(viewportMouseEvent : ViewportMouseEvent)
+    function OnLeftMouseDown(viewportMouseEvent : ViewportMouseEvent)
     {
         if(this.SelectedObj != null)
         {
@@ -101,7 +101,7 @@ class ManipulatorScript : ZilchComponent
         }
     }
     
-    function OnMouseUp(viewportMouseEvent : ViewportMouseEvent)
+    function OnLeftMouseUp(viewportMouseEvent : ViewportMouseEvent)
     {
         this.DeselectObj();
     }
