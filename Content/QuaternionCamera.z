@@ -32,6 +32,10 @@ class QuaternionCamera : ZilchComponent
     var UpDelta : Real = 0.0;
     // the left/right delta from mouse move.
     var SideDelta : Real = 0.0;
+    // The total accumulation of the up/down angle (see spherical coordinates for the definition fo phi).
+    // Used to prevent wrapping around at the poles.
+    var Phi : Real = 0.0;
+    
     // If the camera should rotate when the mouse moves
     // (currently triggered by right mouse up/down)
     var MouseReady : Boolean = false;
@@ -95,6 +99,14 @@ class QuaternionCamera : ZilchComponent
         {
             this.UpDelta = -viewportMouseEvent.Movement.Y * this.LookSpeed;
             this.SideDelta = -viewportMouseEvent.Movement.X * this.LookSpeed;
+            
+            // To prevent wrapping around at the top, compute and clamp the
+            // total phi angle (see spherical coordinates) and then compute
+            // the actual delta that would be applied to get to our clamped value.
+            var halfPi = Math.Pi * 0.5;
+            var oldPhi = this.Phi;
+            this.Phi = Math.Clamp(this.Phi + this.UpDelta, -halfPi, halfPi);
+            this.UpDelta = this.Phi - oldPhi;
         }
     }
     
