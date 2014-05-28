@@ -55,7 +55,7 @@ Level =
 		},
 		Transform = 
 		{
-			Vec3 Translation = [0, 0, 50],
+			Vec3 Translation = [0, 0, 51],
 			Vec3 Scale = [1, 1, 1],
 			Quat Rotation = [-0, -1.09278e-008, 0, 1],
 		},
@@ -73,7 +73,7 @@ Level =
 		EditorCameraController = 
 		{
 			ControlMode ControlMode = Orbit,
-			float LookDistance = 50,
+			float LookDistance = 51,
 			float VerticalAngle = 0,
 			float HorizontalAngle = 0,
 			Vec3 LookTarget = [0, 0, 0],
@@ -109,6 +109,15 @@ Level =
 			float NearPlane = 0.5,
 			float FarPlane = 200,
 			float Size = 20,
+		},
+		QuaternionCamera = 
+		{
+			float Speed = 8,
+			float LookSpeed = 0.005,
+			bool RunWhilePaused = true,
+			bool AllowRotation = true,
+			bool AllowTranslation = true,
+			bool MouseTrapped = true,
 		},
 	},
 	Cog = 
@@ -156,24 +165,25 @@ Level =
 			Vec3 Offset = [0, 0, 0],
 			Vec3 Size = [0.5, 0.5, 0.5],
 		},
-		CreateOnDestroy = 
-		{
-			string ArchetypeToCreate = "532e2475d298795f:Bullet",
-		},
 		Health = 
 		{
 			float MaxHealth = 1,
 			bool DestroyAtZeroHealth = true,
+			float DamageScalar = 1,
 		},
 		HudCreator = 
 		{
 			string HudLevel = "532d6baab5a6d3b7:PathLevel",
 			string SpaceArchetype = "532e2a5971d21139:Space",
 		},
-		ObjectSpawnerScript = 
+		CreateOnDeath = 
 		{
-			int Count = 10,
-			float Delay = 0.1,
+			string ArchetypeToCreate = "532e2475d298795f:Bullet",
+		},
+		ObjectSpawner = 
+		{
+			int Count = 1,
+			float Delay = 1,
 			Vec3 Velocity = [0, 0, 0],
 			string ArchetypeToSpawn = "532d9d13f92dbcf9:BasicParticleSystem",
 		},
@@ -226,7 +236,8 @@ Level =
 		DamageOnCollide = 
 		{
 			float Damage = 10,
-			bool DestroyOnCollide = true,
+			bool SendsDeathEvent = true,
+			bool DieOnCollide = true,
 		},
 	},
 },

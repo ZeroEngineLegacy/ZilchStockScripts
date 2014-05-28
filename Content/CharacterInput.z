@@ -8,19 +8,15 @@ class CharacterInput : ZilchComponent
     
     var Gamepad : Gamepad = null;
     
-    constructor() : base()
-    {
-    }
-
     function Initialize(init : CogInitializer)
     {
-        //Attempt to get the gamepad at the given index
+        // Attempt to get the gamepad at the given index
         this.Gamepad = Zero.Gamepads.GetGamePad(this.GamepadIndex);
         
-        //Listen for when the character wants input to be updated (to reduce lag)
+        // Listen for when the character wants input to be updated (to reduce lag)
         Zero.Connect(this.Owner, "UpdateCharacterInput", this.OnUpdateCharacterInput);
         
-        //Listen for jumping on up/down events
+        // Listen for jumping on up/down events
         if(this.InputType == true)
         {
             Zero.Connect(Zero.Keyboard, Events.KeyDown, this.OnKeyDown);
@@ -35,18 +31,18 @@ class CharacterInput : ZilchComponent
     
     function OnUpdateCharacterInput(e : Event)
     {
-        //Get our movement direction (zero out the y axis so we can't fly)
+        // Get our movement direction (zero out the y axis so we can't fly)
         var movement = this.GetMovementDirection();
         movement.Y = 0.0;
         
-        //set the movement direction on the player
+        // set the movement direction on the player
         this.Owner.PlatformerCharacterController.MoveDirection = movement;
     }
     
     function GetMovementDirection() : Real3
     {
-        //get our movement direction depending on whether
-        //we use keyboard or gamepad input
+        // get our movement direction depending on whether
+        // we use keyboard or gamepad input
         if(this.InputType)
         {
             return this.GetKeyboardMovement();
@@ -93,28 +89,28 @@ class CharacterInput : ZilchComponent
     
     function GetKeyboardMovement() : Real3
     {
-        var dir = local Real3(0.0, 0.0, 0.0);
+        var dir = Real3(0.0, 0.0, 0.0);
         if(Zero.Keyboard.KeyIsDown(Keys.A))
         {
-            dir += local Real3(-1.0, 0.0, 0.0);
+            dir += Real3(-1.0, 0.0, 0.0);
         }
         if(Zero.Keyboard.KeyIsDown(Keys.D))
         {
-            dir += local Real3(1.0, 0.0, 0.0);
+            dir += Real3(1.0, 0.0, 0.0);
         }
         if(Zero.Keyboard.KeyIsDown(Keys.W))
         {
-            dir += local Real3(0.0, 1.0, 0.0);
+            dir += Real3(0.0, 1.0, 0.0);
         }
         if(Zero.Keyboard.KeyIsDown(Keys.D))
         {
-            dir += local Real3(0.0, -1.0, 0.0);
+            dir += Real3(0.0, -1.0, 0.0);
         }
         return dir;
     }
     
     function GetGamepadMovement() : Real3
     {
-        return local Real3(this.Gamepad.LeftStick, 0.0);
+        return Real3(this.Gamepad.LeftStick, 0.0);
     }
 }

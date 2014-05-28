@@ -8,19 +8,15 @@ class FpsCharacterInput : ZilchComponent
     
     var Gamepad : Gamepad = null;
     
-    constructor() : base()
-    {
-    }
-
     function Initialize(init : CogInitializer)
     {
-        //Attempt to get the gamepad at the given index
+        // Attempt to get the gamepad at the given index
         this.Gamepad = Zero.Gamepads.GetGamePad(this.GamepadIndex);
         
-        //Listen for when the character wants input to be updated (to reduce lag)
+        // Listen for when the character wants input to be updated (to reduce lag)
         Zero.Connect(this.Owner, "UpdateCharacterInput", this.OnUpdateCharacterInput);
         
-        //Listen for jumping on up/down events
+        // Listen for jumping on up/down events
         if(this.InputType == true)
         {
             Zero.Connect(Zero.Keyboard, Events.KeyDown, this.OnKeyDown);
@@ -35,22 +31,22 @@ class FpsCharacterInput : ZilchComponent
     
     function OnUpdateCharacterInput(e : Event)
     {
-        //Get our movement direction (zero out the y axis so we can't fly)
+        // Get our movement direction (zero out the y axis so we can't fly)
         var movement = this.GetMovementDirection();
         movement.Y = 0.0;
         
-        //set the movement direction on the player
+        // set the movement direction on the player
         this.Owner.PlatformerCharacterController.MoveDirection = movement;
     }
     
     function GetMovementDirection() : Real3
     {
-        //Use orientation to determine what our current forward and right vectors are
+        // Use orientation to determine what our current forward and right vectors are
         var forward = this.Owner.Orientation.WorldForward;
         var right = this.Owner.Orientation.WorldRight;
         
-        //get our movement direction depending on whether
-        //we use keyboard or gamepad input
+        // get our movement direction depending on whether
+        // we use keyboard or gamepad input
         if(this.InputType)
         {
             return this.GetKeyboardMovement(forward, right);
@@ -60,7 +56,7 @@ class FpsCharacterInput : ZilchComponent
             return this.GetGamepadMovement(forward, right);
         }
         
-        return local Real3(0.0, 0.0, 0.0);
+        return Real3(0.0, 0.0, 0.0);
     }
     
     function OnKeyDown(keyboardEvent : KeyboardEvent)
@@ -97,9 +93,9 @@ class FpsCharacterInput : ZilchComponent
     
     function GetKeyboardMovement(forward : Real3, right : Real3) : Real3
     {
-        //Build up our movement direction based upon our
-        //world space forward and right directions
-        var dir = local Real3(0.0, 0.0, 0.0);
+        // Build up our movement direction based upon our
+        // world space forward and right directions
+        var dir = Real3(0.0, 0.0, 0.0);
         if(Zero.Keyboard.KeyIsDown(Keys.A))
         {
             dir -= right;

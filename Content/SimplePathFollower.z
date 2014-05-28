@@ -22,7 +22,7 @@ class SimplePathFollower : ZilchComponent
     
     // The local point that should follow along the path.
     [Property]
-    var LocalFollowPoint : Real3 = local Real3(0.0, 0.0, 0.0);
+    var LocalFollowPoint : Real3 = Real3(0.0, 0.0, 0.0);
     
     // How we follow the path, primarily what we do when we reach the end.
     [Property]
@@ -44,16 +44,12 @@ class SimplePathFollower : ZilchComponent
     var Direction : Real = 1.0;
     
     // The forward direction we had last frame. Used to smooth out rotations.
-    var OldForward : Real3 = local Real3(0.0, 1.0, 0.0);
+    var OldForward : Real3 = Real3(0.0, 1.0, 0.0);
     
     // Used to calculte the delta movement vector so that we can more easily perform local following.
-    var PrevPoint : Real3 = local Real3(0.0, 0.0, 0.0);
+    var PrevPoint : Real3 = Real3(0.0, 0.0, 0.0);
     // The rotation that takes us from the path's frame to our initial following frame.
-    var InvPathRotation : Quaternion = local Quaternion();
-    
-    constructor() : base()
-    {
-    }
+    var InvPathRotation : Quaternion = Quaternion();
     
     function Initialize(init : CogInitializer)
     {
@@ -148,7 +144,7 @@ class SimplePathFollower : ZilchComponent
     function UpdateOrientation(forward : Real3)
     {
         var currForward = Math.Slerp(this.OldForward, forward, 0.1);
-        this.Owner.Orientation.LookAtDirectionWithUp(currForward, local Real3(0.0, 0.0, 1.0));
+        this.Owner.Orientation.LookAtDirectionWithUp(currForward, Real3(0.0, 0.0, 1.0));
         this.OldForward = currForward;
     }
     

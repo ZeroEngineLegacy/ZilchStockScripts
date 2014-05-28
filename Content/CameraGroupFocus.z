@@ -1,10 +1,10 @@
 class CameraGroupFocus : ZilchComponent
 {
     [Property]
-    var FirstTarget : CogPath = new CogPath();
+    var FirstTarget : CogPath = CogPath();
     
     [Property]
-    var PlaneNormal : Real3 = local Real3(0.0, 0.0, -1.0);
+    var PlaneNormal : Real3 = Real3(0.0, 0.0, -1.0);
     
     [Property]
     var PlaneDistanceScalar : Real = 1.0;
@@ -22,7 +22,7 @@ class CameraGroupFocus : ZilchComponent
     var TranslationSmoothness : Real = 0.1;
     
     [Property]
-    var PositionOffset : Real3 = local Real3(0.0, 0.0, 0.0);
+    var PositionOffset : Real3 = Real3(0.0, 0.0, 0.0);
     
     [Property]
     var ControlsOffset : Boolean = true;
@@ -30,17 +30,19 @@ class CameraGroupFocus : ZilchComponent
     [Property]
     var ControlsOrientation : Boolean = true;
     
-    var Objects : Array[Cog] = new Array[Cog]();
+    var Objects : Array[Cog] = Array[Cog]();
     var CurrDistance : Real = 0.0;
     
-    constructor() : base()
-    {
-    }
+    [Dependency]
+    var Transform : Transform = null;
+    
+    [Dependency]
+    var Camera : Camera = null;
     
     function Initialize(init : CogInitializer)
     {
-        //We depend on having a transform and a camera, if we don't have
-        //any then make this script do nothing by never connecting to logic update
+        // We depend on having a transform and a camera, if we don't have
+        // any then make this script do nothing by never connecting to logic update
         if(this.Owner.Transform == null || this.Owner.Camera == null)
         {
             return;
@@ -53,46 +55,46 @@ class CameraGroupFocus : ZilchComponent
             this.Objects.Add(firstTarget);
         }
         
-        Zero.Connect(this.Space as Cog, Events.LogicUpdate, this.OnLogicUpdate);
+        Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
     }
     
     function OnLogicUpdate(updateEvent : UpdateEvent)
     {
         this.PlaneNormal = Math.Normalize(this.PlaneNormal);
-        //Validate our list by removing invalid cogs
+        // Validate our list by removing invalid cogs
         this.ValidateCogs();
         
-        //If there are no objects to focus on don't do anything
+        // If there are no objects to focus on don't do anything
         if(this.Objects.Count == 0)
         {
             return;
         }
         
-        //Compute the average position of the objects and the aabb encasing them
+        // Compute the average position of the objects and the aabb encasing them
         var aabb = this.ComputeAabb();
         
-        //Get the camera position
-        var myTransform = this.Owner.Transform;
+        // Get the camera position
+        var myTransform = this.Transform;
         var cameraPos = myTransform.Translation;
         
-        //Offset the center of the aabb
+        // Offset the center of the aabb
         var aabbCenter = aabb.GetCenter() + this.PositionOffset;
-        //Project the aabb's center onto the plane the camera is currently on
+        // Project the aabb's center onto the plane the camera is currently on
         var offset = aabbCenter - cameraPos;
         var projectedCameraDistance = Math.Dot(offset, this.PlaneNormal);
         var projectedCameraPos = aabbCenter - projectedCameraDistance * this.PlaneNormal;
-        //Get the offset from the current position to the projection position
+        // Get the offset from the current position to the projection position
         var projOffset = projectedCameraPos - cameraPos;
-        //Normalize the vector and get the current distance between the two points
+        // Normalize the vector and get the current distance between the two points
         var projDist = Math.Length(projOffset);
         projOffset = Math.Normalize(projOffset);
-        //Lerp a new distance
+        // Lerp a new distance
         var lerpDistance = Math.Lerp(0.0, projDist, this.TranslationSmoothness);
         cameraPos += projOffset * lerpDistance;
         
-        //Take the lerped camera position and lerp a new position for the distance
+        // Take the lerped camera position and lerp a new position for the distance
         
-        //Project the average position onto the plane
+        // Project the average position onto the plane
         var extents = aabb.GetExtents() * 2.0;
         var aabbMax = Math.Max(extents.X, extents.Z * 2.0);
         aabbMax = Math.Max(aabbMax, extents.Y);
@@ -101,14 +103,14 @@ class CameraGroupFocus : ZilchComponent
         var dist = aabbMax * this.PlaneDistanceScalar + this.PlaneDistanceConstant;
         
         this.CurrDistance = Math.Lerp(this.CurrDistance, dist, this.Smoothness);
-        //Set the new camera position
+        // Set the new camera position
         cameraPos += this.PlaneNormal * -(dist - this.CurrDistance);
         myTransform.Translation = cameraPos;
         
         if(this.ControlsOrientation)
         {
-            //Set the rotation
-            var right = Math.Cross(this.PlaneNormal, local Real3(0.0, 1.0, 0.0));
+            // Set the rotation
+            var right = Math.Cross(this.PlaneNormal, Real3(0.0, 1.0, 0.0));
             right = Math.Normalize(right);
             var up = Math.Cross(right, this.PlaneNormal);
             up = Math.Normalize(up);
@@ -143,15 +145,15 @@ class CameraGroupFocus : ZilchComponent
     
     function ComputeAabb() : Aabb
     {
-        //Compute the average position of the objects and the aabb encasing the objects
+        // Compute the average position of the objects and the aabb encasing the objects
         
-        //Initialize the aabb to the first object's position
-        var aabb = new Aabb();
+        // Initialize the aabb to the first object's position
+        var aabb = Aabb();
         var obj = this.Objects.Get(0);
         var pos = obj.Transform.WorldTranslation;
         aabb.Set(pos);
         
-        //Expand the aabb by every object's position
+        // Expand the aabb by every object's position
         for(var i = 1; i < this.Objects.Count; ++i)
         {
             obj = this.Objects.Get(i);
@@ -167,7 +169,7 @@ class CameraGroupFocus : ZilchComponent
         while(i < this.Objects.Count)
         {
             var cog = this.Objects.Get(i);
-            //If this cog is not valid, remove it
+            // If this cog is not valid, remove it
             if(cog == null)
             {
                 this.Objects.Set(i, this.Objects.Get(this.Objects.LastIndex));

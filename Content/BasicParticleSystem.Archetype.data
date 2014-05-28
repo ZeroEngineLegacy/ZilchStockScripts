@@ -14,7 +14,7 @@ Cog =
 	},
 	Transform = 
 	{
-		Vec3 Translation = [0, 0, 0],
+		Vec3 Translation = [13.3544, 8.31822, 0],
 		Vec3 Scale = [1, 1, 1],
 		Quat Rotation = [0, 0, 0, 1],
 	},
@@ -71,5 +71,9 @@ Cog =
 		Vec4 Color2 = [1, 1, 1, 1],
 		Vec4 Color3 = [1, 1, 1, 1],
 		Vec4 Color4 = [1, 1, 1, 0],
+	},
+	FadeOut = 
+	{
+		float FadeOutTime = 1,
 	},
 },

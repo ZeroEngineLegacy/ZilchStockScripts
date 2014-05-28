@@ -13,7 +13,7 @@ class PlatformerCharacterController : ZilchComponent
     var Active : Boolean = true;
     //The up vector of the character. You will jump in this direction
     [Property]
-    var Up : Real3 = local Real3(0.0, 1.0, 0.0);
+    var Up : Real3 = Real3(0.0, 1.0, 0.0);
     //------------------------------------------------------------------ Movement
     // The maximum speed the character can achieve on its own
     [Property]
@@ -80,18 +80,14 @@ class PlatformerCharacterController : ZilchComponent
     var TimeSinceLastDirectContact : Real = 0.0;
     // The velocity of the ground we're standing on
     // This is used for to maintain velocity when jumping off of moving ground
-    var VelocityOfGround : Real3 = local Real3(0.0, 0.0, 0.0);
+    var VelocityOfGround : Real3 = Real3(0.0, 0.0, 0.0);
     var CharacterState : CharacterState = CharacterState.Idle;
     var JumpTimer : Real = 0.0;
     
     // The direction that we're moving. This is set from
     // another script that is updated every frame.
-    var MoveDirection : Real3 = local Real3(0.0, 0.0, 0.0);
+    var MoveDirection : Real3 = Real3(0.0, 0.0, 0.0);
     
-    constructor() : base()
-    {
-    }
-
     function Initialize(init : CogInitializer)
     {
         // We need to update the character's movement every logic update
@@ -109,7 +105,7 @@ class PlatformerCharacterController : ZilchComponent
         // the MoveDirection vector that on us. The reason we send an event out here
         //is to reduce character lag. The receiver of the event will be able
         //to immediately update our state.
-        var toSend = new Event();
+        var toSend = Event();
         this.Owner.DispatchEvent("UpdateCharacterInput", toSend);
         
         // Update whether or not we are on ground, as well as getting 
@@ -282,7 +278,7 @@ class PlatformerCharacterController : ZilchComponent
         {
             // Reset all values
             this.OnGround = false;
-            this.VelocityOfGround = local Real3(0.0, 0.0, 0.0);
+            this.VelocityOfGround = Real3(0.0, 0.0, 0.0);
             
             // By default, always set our reference frame to the world
             // If we're in contact with another object that is considered walkable, 

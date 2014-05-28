@@ -1,8 +1,0 @@
-TextContent = 
-{
-	ZilchScriptBuilder = 
-	{
-		string Name = "CreateOnDestroy",
-		uint64 ResourceId = 532e2ab87b177cb9,
-	},
-},

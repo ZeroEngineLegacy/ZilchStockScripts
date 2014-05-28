@@ -2,7 +2,7 @@ TextContent =
 {
 	ZilchScriptBuilder = 
 	{
-		string Name = "ObjectSpawnerScript",
+		string Name = "ObjectSpawner",
 		uint64 ResourceId = 532e2ab87b29c12e,
 	},
 },

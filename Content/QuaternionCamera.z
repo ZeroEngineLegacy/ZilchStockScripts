@@ -1,53 +1,52 @@
 class QuaternionCamera : ZilchComponent
 {
-    //The movement speed of the camera.
+    // The movement speed of the camera.
     [Property]
     var Speed : Real = 8.0;
     
-    //The speed at which the camera can rotation. This has the units of radians per pixel.
+    // The speed at which the camera can rotation. This has the units of radians per pixel.
     [Property]
     var LookSpeed : Real = 0.005;
     
-    //If this camera will run when the space is paused.
-    //Used mostly to debug a paused game.
+    // If this camera will run when the space is paused.
+    // Used mostly to debug a paused game.
     [Property]
     var RunWhilePaused : Boolean = true;
     
-    //If we want this camera to be able to rotate.
+    // If we want this camera to be able to rotate.
     [Property]
     var AllowRotation : Boolean = true;
     
-    //If we want this camera to be able to translate.
+    // If we want this camera to be able to translate.
     [Property]
     var AllowTranslation : Boolean = true;
     
-    //Whether or not the mouse is hidden and trapped by the camera.
+    // Whether or not the mouse is hidden and trapped by the camera.
     [Property]
     var MouseTrapped : Boolean = false;
     
-    //The up/down delta from mouse move.
+    [Dependency]
+    var Camera : Camera = null;
+    
+    // The up/down delta from mouse move.
     var UpDelta : Real = 0.0;
-    //the left/right delta from mouse move.
+    // the left/right delta from mouse move.
     var SideDelta : Real = 0.0;
-    //If the camera should rotate when the mouse moves
-    //(currently triggered by right mouse up/down)
+    // If the camera should rotate when the mouse moves
+    // (currently triggered by right mouse up/down)
     var MouseReady : Boolean = false;
-
-    constructor() : base()
-    {
-    }
     
     function Initialize(initializer : CogInitializer)
     {
-        //get the viewport so we can listen to mouse events
-        var viewport = this.Owner.Camera.Viewport;
+        // Get the viewport so we can listen to mouse events
+        var viewport = this.Camera.Viewport;
         
         Zero.Connect(viewport, Events.RightMouseDown, this.OnRightMouseDown);
         Zero.Connect(viewport, Events.RightMouseUp, this.OnRightMouseUp);
         Zero.Connect(viewport, Events.MouseMove, this.OnMouseMove);
         
-        //if we run while paused then connect to frame update (happens every frame),
-        //otherwise only listen on logic update (won't happen if paused)
+        // If we run while paused then connect to frame update (happens every frame),
+        // otherwise only listen on logic update (won't happen if paused)
         if(this.RunWhilePaused)
         {
             Zero.Connect(this.Space, Events.FrameUpdate, this.OnFrameUpdate);
@@ -57,18 +56,18 @@ class QuaternionCamera : ZilchComponent
             Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
         }
         
-        //if we want to trap the mouse, then set the mouse to always be ready
-        //and tell the viewport to trap the mouse (hides the cursor)
+        // If we want to trap the mouse, then set the mouse to always be ready
+        // and tell the viewport to trap the mouse (hides the cursor)
         if(this.MouseTrapped)
         {
             this.MouseReady = true;
-            viewport.CameraViewport.MouseTrapped = true;
+            Zero.Mouse.Trapped = true;
         }
     }
     
     function OnRightMouseDown(viewportMouseEvent : MouseEvent)
     {
-        //if the mouse is trapped then we don't modify the mouse ready state
+        // If the mouse is trapped then we don't modify the mouse ready state
         if(this.MouseTrapped == false)
         {
             this.MouseReady = true;
@@ -90,8 +89,8 @@ class QuaternionCamera : ZilchComponent
     
     function CameraMouseMove(viewportMouseEvent : MouseEvent)
     {
-        //if the mouse was ready (aka we're tracking mouse movement)
-        //then update the mouse deltas
+        // If the mouse was ready (aka we're tracking mouse movement)
+        // then update the mouse deltas
         if(this.MouseReady)
         {
             this.UpDelta = -viewportMouseEvent.Movement.Y * this.LookSpeed;
@@ -101,7 +100,7 @@ class QuaternionCamera : ZilchComponent
     
     function CameraMovement(updateEvent : UpdateEvent)
     {
-        //update translation and rotation independently
+        // Update translation and rotation independently
         if(this.AllowTranslation)
         {
             this.MoveCamera(updateEvent);
@@ -114,42 +113,42 @@ class QuaternionCamera : ZilchComponent
     
     function MoveCamera(updateEvent : UpdateEvent)
     {
-        var movement = local Real3(0.0,0.0,0.0);
+        var movement = Real3(0.0, 0.0, 0.0);
         
-        //record keyboard movement to pan the camera
+        // Record keyboard movement to pan the camera
         if(Zero.Keyboard.KeyIsDown(Keys.A))
         {
-            movement += local Real3(-1.0,0.0,0.0);
+            movement.X -= 1.0;
         }
         if(Zero.Keyboard.KeyIsDown(Keys.D))
         {
-            movement += local Real3(1.0,0.0,0.0);
+            movement.X += 1.0;
         }
         if(Zero.Keyboard.KeyIsDown(Keys.W))
         {
-            movement += local Real3(0.0,0.0,-1.0);
+            movement.Y -= 1.0;
         }
         if(Zero.Keyboard.KeyIsDown(Keys.S))
         {
-            movement += local Real3(0.0,0.0,1.0);
+            movement.Y += 1.0;
         }
         
-        //we computed the direction in local space, bring it to the camera's world space
+        // We computed the direction in local space, bring it to the camera's world space
         var current = this.Owner.Transform.Translation;
         movement = this.Owner.Transform.TransformNormal(movement);
         
-        //add panning along the y-axis because it is nice.
-        //do this after the transform normal because we want the world up, not local up
+        // Add panning along the y-axis because it is nice.
+        // Do this after the transform normal because we want the world up, not local up
         if(Zero.Keyboard.KeyIsDown(Keys.Q))
         {
-            movement += local Real3(0.0,-1.0,0.0);
+            movement.Y -= 1.0;
         }
         if(Zero.Keyboard.KeyIsDown(Keys.E))
         {
-            movement += local Real3(0.0,1.0,0.0);
+            movement.Y += 1.0;
         }
         
-        //update the translation
+        // Update the translation
         var speed = updateEvent.Dt * this.Speed;
         current += movement * speed;
         this.Owner.Transform.Translation = current;
@@ -157,31 +156,31 @@ class QuaternionCamera : ZilchComponent
     
     function RotateCamera(updateEvent : UpdateEvent)
     {
-        //cache the transform component
+        // Cache the transform component
         var transform = this.Owner.Transform;
         
-        //generate the up rotation (the rotation about our local x axis)
-        var upRotation = local Quaternion();
-        //bring our local x axis into our local space (ignore parent's transform)
-        var worldX = transform.TransformNormalLocal(local Real3(1.0,0.0,0.0));
+        // Generate the up rotation (the rotation about our local x axis)
+        var upRotation = Quaternion();
+        // Bring our local x axis into our local space (ignore parent's transform)
+        var worldX = transform.TransformNormalLocal(Real3(1.0, 0.0, 0.0));
         worldX = Math.Normalize(worldX);
-        //generate the quaternion from that axis and an angle
+        // Generate the quaternion from that axis and an angle
         upRotation = Math.ToQuaternion(worldX, this.UpDelta);
         
-        //generate the side rotation (rotation about world y axis)
-        var sideRotation = local Quaternion();
-        sideRotation = Math.ToQuaternion(local Real3(0.0,1.0,0.0),this.SideDelta);
+        // Generate the side rotation (rotation about world y axis)
+        var sideRotation = Quaternion();
+        sideRotation = Math.ToQuaternion(Real3(0.0,1.0,0.0), this.SideDelta);
         
-        //make sure to multiply in the correct order, we have to look up then look to the side
-        //if we look to the side first, we will invalidate the up rotation we generated
-        //(use local rotation incase we have a parent)
+        // Make sure to multiply in the correct order, we have to look up then look to the side.
+        // If we look to the side first, we will invalidate the up rotation we generated
+        // (use local rotation incase we have a parent)
         var endResult = Math.Transform(transform.LocalRotation, upRotation);
         endResult = Math.Transform(endResult, sideRotation);
-        //also make sure to normalize
+        // Also make sure to normalize
         endResult = Math.Normalize(endResult);
         transform.LocalRotation = endResult;
         
-        //clear the deltas
+        // Clear the deltas
         this.UpDelta = 0.0;
         this.SideDelta = 0.0;
     }

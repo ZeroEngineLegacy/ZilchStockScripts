@@ -1,20 +1,24 @@
 class DamageOnCollide : ZilchComponent
 {
-    //How much damage to apply to what we hit when we collide with it.
+    // How much damage to apply to what we hit when we collide with it.
     [Property]
     var Damage : Real = 10.0;
     
-    //Whether or not we die when we collide with something.
+    // Do we send the death event when we collide?
     [Property]
-    var DestroyOnCollide : Boolean = true;
+    var SendsDeathEvent : Boolean = true;
+    // Whether or not we die when we collide with something.
+    [Property]
+    var DieOnCollide : Boolean = true;
     
-    //The root cog we originated from (we ignore damage to this cog and its descendents)
-    //Set this to null to damage everything
+    // The root cog we originated from (we ignore damage to this cog and its descendents).
+    // Set this to null to damage everything
     var OriginRoot : Cog = null;
     
-    constructor() : base()
-    {
-    }
+    // When we die, we sound out a death event.
+    sends Death : ZilchEvent;
+    // When colliding we tell an object that we're applying damage to it.
+    sends ApplyDamage : DamageEvent;
     
     function Initialize(init : CogInitializer)
     {
@@ -23,31 +27,45 @@ class DamageOnCollide : ZilchComponent
     
     function OnCollisionStarted(collisionEvent : CollisionEvent)
     {
-        //Get the other object we hit
+        // Get the other object we hit.
         var otherObject = collisionEvent.OtherObject;
-        //Also get the root in the hierarchy (used to make sure that
-        //the person who shot this doesn't get hit by his own shot)
+        var otherDamageOnCollide = otherObject.DamageOnCollide;
+        
+        // Currently, bullets will collide with other bullets.
+        // A check here can be added to ignore collisions between other bullet objects.
+        // Collision groups can also be used here to solve this problem.
+        
+        // Also get the root in the hierarchy (used to make sure that
+        // the person who shot this doesn't get hit by his own shot).
         var otherRoot = otherObject.FindRoot();
         
-        //Don't damage the person we were created from
+        // Don't damage the person we were created from.
         if(otherRoot == this.OriginRoot)
         {
             return;
         }
         
-        //If what we hit has a health component then damage it
+        // If what we hit has a health component then damage it.
         var health = otherObject.Health;
         if(health != null)
         {
-            health.ApplyDamage(this.Damage);
+            var firstPoint = collisionEvent.FirstPoint;
+            var damageEvent = DamageEvent();
+            damageEvent.Normal = firstPoint.WorldNormalTowardsOther;
+            damageEvent.Damage = this.Damage;
+            damageEvent.WorldPoint = firstPoint.WorldPoint;
+            otherObject.DispatchEvent(Events.ApplyDamage, damageEvent);
         }
         
-        if(this.DestroyOnCollide)
+        if(this.SendsDeathEvent)
         {
-            //let anyone listening know we just died
-            var toSend = new Event();
-            this.Owner.DispatchEvent("Death", toSend);
-            
+            // Let anyone listening know we just died.
+            var toSend = ZilchEvent();
+            this.Owner.DispatchEvent(Events.Death, toSend);
+        }
+        
+        if(this.DieOnCollide)
+        {
             this.Owner.Destroy();
         }
     }
