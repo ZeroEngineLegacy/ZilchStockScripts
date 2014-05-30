@@ -1,3 +1,6 @@
+// A camera that orbits around a focal point. Rotates with right mouse or on
+// left mouse when 'q' is held. Pans with left mouse when 'e' is held. zooms
+// in and out towards the focal point with the scroll wheel.
 class OrbitCamera : ZilchComponent
 {
     [Property]
@@ -20,8 +23,10 @@ class OrbitCamera : ZilchComponent
     var Camera : Camera = null;
     
     // Where the camera is looking at.
+    [Property]
     var Target : Real3 = Real3(0.0, 0.0, 0.0);
     // The radius of the sphere that we are orbiting about. Controls the current zoom level.
+    [Property]
     var Radius : Real = 5.0;
     
     // Spherical coordinates. These control our position on the sphere we're rotating about.
@@ -36,7 +41,7 @@ class OrbitCamera : ZilchComponent
     // maximum angle we can travel towards the poles on the rotation sphere.
     var RotationDeadZone : Real = 0.01;
     
-    function OnAllObjectsCreated()
+    function Initialize(initializer : CogInitializer)
     {
         // We do all of our transform update logic during logic update
         Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
