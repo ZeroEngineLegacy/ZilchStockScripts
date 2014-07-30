@@ -187,7 +187,7 @@ class OrbitCamera : ZilchComponent
         if(this.RightMouseDown || Zero.Keyboard.KeyIsDown(Keys.Q))
         {
             var sphere = DebugSphere();
-            sphere.Position(this.Target).Partial(true);
+            sphere.Position(this.Target).BackShade(true).Colored(true);
             sphere.Draw();
         }
         // Draw a transform 'plus' if we're going to transform the camera
