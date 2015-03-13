@@ -16,4 +16,13 @@ GameSession =
 		string StartingSpaceName = "532e2a5971d21139:Space",
 		string StartingLevelName = "532e2a5971d1e24d:Level",
 	},
+	CameraViewports = 
+	{
+	},
+	ZilchState = 
+	{
+	},
+	UnitTests = 
+	{
+	},
 },
