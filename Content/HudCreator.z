@@ -31,6 +31,9 @@ class HudCreator : ZilchComponent
     function Destroyed()
     {
         // Make sure to clean up the Hud space when we get destroyed
-        this.HudSpace.Destroy();
+        if(this.HudSpace != null)
+        {
+            this.HudSpace.Destroy();
+        }
     }
 }
