@@ -15,6 +15,7 @@ class UnitTests : ZilchComponent
         Action.Call(seq, this.PlayGame);
         Action.Delay(seq, 10.0);
         Action.Call(seq, this.QuitRunningGame);
+        Action.Delay(seq, 2.0);
         Action.Call(seq, this.GameSession.Quit);
     }
     
@@ -26,6 +27,6 @@ class UnitTests : ZilchComponent
     
     function QuitRunningGame()
     {
-        this.RunningGame.Quit();
+        this.RunningGame.RequestQuit();
     }
 }
