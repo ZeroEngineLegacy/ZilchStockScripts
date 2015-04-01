@@ -19,6 +19,8 @@ class SweptController : ZilchComponent
     var RigidBody : RigidBody = null;
     [Dependency]
     var Collider : Collider = null;
+    [Dependency]
+    var EventTracker : CustomCollisionEventTracker = null;
     
     // Normal of the world's ground plane.
     // Used to decompose movement into horizontal and vertical pieces.
@@ -30,9 +32,8 @@ class SweptController : ZilchComponent
     var LockZAxis : Boolean = false;
     // If the swept event should also be tracked as standard collision events.
     // i.e. Will send out CollisionStarted/Persisted/Ended events.
-    // Requires the 'CustomCollisionEventTracker' component on this object.
     [Property]
-    var ForwardEvents : Boolean = false;
+    var ForwardEvents : Boolean = true;
     // Constant acceleration against WorldUp when not on ground.
     [Property]
     var Gravity : Real = 10.0;
@@ -398,6 +399,15 @@ class SweptController : ZilchComponent
                 // advance the character into contact with the detected object.
                 this.SendCollisionEvent(Events.SweptCollision, result);
                 
+                // Check collision groups for skip resolution after detection event is sent.
+                if (this.SkipResolution(this.Collider, result.OtherCollider))
+                {
+                    continue;
+                }
+                
+                // Keep track of kinematic objects for next update.
+                this.AddIfKinematic(result.OtherObject);
+                
                 // Move forward to the first time of impact.
                 // A time of 0 is valid, it just wont result in any translation.
                 timeLeft -= result.Time;
@@ -587,6 +597,15 @@ class SweptController : ZilchComponent
                 // choose to do something only when in contact with the ground.
                 this.SendCollisionEvent(Events.GroundSnapCollision, result);
                 
+                // Check collision groups for skip resolution after detection event is sent.
+                if (this.SkipResolution(this.Collider, result.OtherCollider))
+                {
+                    continue;
+                }
+                
+                // Keep track of kinematic objects for next update.
+                this.AddIfKinematic(result.OtherObject);
+                
                 this.Transform.Translation += maxDisplacement * result.Time;
                 
                 // Reset flag since ground was detected.
@@ -595,6 +614,18 @@ class SweptController : ZilchComponent
                 break;
             }
         }
+    }
+    
+    function SkipResolution(colliderA : Collider, colliderB : Collider) : Boolean
+    {
+        var collisionTable = this.Space.PhysicsSpace.CollisionTable;
+        var filter = collisionTable.FindCollisionFilter(colliderA.CollisionGroup, colliderB.CollisionGroup);
+        if (filter != null && filter.CollisionFlag == FilterCollisionFlags.SkipResolution)
+        {
+            return true;
+        }
+        
+        return false;
     }
     
     // Measures angle between suface normal and WorldUp
@@ -638,14 +669,12 @@ class SweptController : ZilchComponent
     // Sends out script event and adds it to the tracker if needed.
     function SendCollisionEvent(eventName : String, result : ContinuousResult)
     {
-        if (this.ForwardEvents && this.Owner.CustomCollisionEventTracker != null)
+        if (this.ForwardEvents)
         {
-            this.Owner.CustomCollisionEventTracker.AddCollision(result.OtherCollider, result.WorldPoint, result.WorldNormalTowardsOther);
+            this.EventTracker.AddCollision(result.OtherCollider, result.WorldPoint, result.WorldNormalTowardsOther);
         }
         
         this.Owner.DispatchEvent(eventName, SweptControllerEvent(result));
-        
-        this.AddIfKinematic(result.OtherObject);
     }
     
     // Sends out script event and invokes tracker events to be sent.
@@ -653,9 +682,9 @@ class SweptController : ZilchComponent
     // or the list will not have complete information.
     function SweptCompleted()
     {
-        if (this.ForwardEvents && this.Owner.CustomCollisionEventTracker != null)
+        if (this.ForwardEvents)
         {
-            this.Owner.CustomCollisionEventTracker.SendEvents("Collision");
+            this.EventTracker.SendEvents("Collision");
         }
         
         this.Owner.DispatchEvent(Events.SweptCompleted, ZilchEvent());
@@ -666,7 +695,10 @@ class SweptController : ZilchComponent
     // Forwards object to kinematic check.
     function OnCollision(event : CollisionEvent)
     {
-        this.AddIfKinematic(event.OtherObject);
+        if (this.SkipResolution(this.Collider, event.OtherObject.Collider) == false)
+        {
+            this.AddIfKinematic(event.OtherObject);
+        }
     }
     
     // Adds kinematic objects to the list that will be resolved next update.
