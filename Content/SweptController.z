@@ -619,7 +619,7 @@ class SweptController : ZilchComponent
     function SkipResolution(colliderA : Collider, colliderB : Collider) : Boolean
     {
         var collisionTable = this.Space.PhysicsSpace.CollisionTable;
-        var filter = collisionTable.FindCollisionFilter(colliderA.CollisionGroup, colliderB.CollisionGroup);
+        var filter = collisionTable.FindFilter(colliderA.CollisionGroup, colliderB.CollisionGroup);
         if (filter != null && filter.CollisionFlag == FilterCollisionFlags.SkipResolution)
         {
             return true;
