@@ -22,7 +22,7 @@ GameSession =
 	ZilchState = 
 	{
 	},
-	UnitTests = 
+	RunUnitTests = 
 	{
 	},
 },
