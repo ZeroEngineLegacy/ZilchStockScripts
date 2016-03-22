@@ -105,7 +105,7 @@ class PlatformerCharacterController : ZilchComponent
         // the MoveDirection vector that on us. The reason we send an event out here
         //is to reduce character lag. The receiver of the event will be able
         //to immediately update our state.
-        var toSend = Event();
+        var toSend = ZilchEvent();
         this.Owner.DispatchEvent("UpdateCharacterInput", toSend);
         
         // Update whether or not we are on ground, as well as getting 
