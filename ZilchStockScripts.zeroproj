@@ -6,7 +6,8 @@ Cog =
 		string ProjectOwner = "",
 		string DefaultLevel = "Level",
 		string ProjectSpace = "Space",
-		uint ProjectEngineRevision = 11826,
+		string ProjectFolder = "C:\Users\ZeroDavis\Desktop\Zero\ZeroSummerBranch\ZilchStockScripts",
+		uint ProjectEngineRevision = 13221,
 		bool AutoTakeProjectScreenshot = true,
 	},
 	EditorSettings = 
@@ -16,5 +17,6 @@ Cog =
 		float ViewCubeViewportSize = 150,
 		ScriptReloadMethod ScriptReloadEditor = ReInitializeObjects,
 		ScriptReloadMethod ScriptReloadGame = PatchObjects,
+		bool AutoUpdateContentChanges = true,
 	},
 },

@@ -91,7 +91,10 @@ class UnitTests : ZilchComponent
                                                           project ,
                                                           fileName);
             
-        this.Owner.CameraViewport.Viewport.ScreenCapture(filePath);
+        timeout(9999)
+        {
+            this.Owner.CameraViewport.Viewport.ScreenCapture(filePath);
+        }
         
         ++this.ScreenShotsTaken;
     }
