@@ -11,11 +11,11 @@ class FadeOut : ZilchComponent
         var sprite = this.Owner.Sprite;
         if(sprite != null)
         {
-            var endColor = sprite.Color;
+            var endColor = sprite.VertexColor;
             endColor.W = 0.0;
             
             // Create a property to animate the color from its current value to one with zero alpha
-            Action.Property(seq, @sprite.Color, endColor, this.FadeOutTime, Ease.Linear);
+            Action.Property(seq, @sprite.VertexColor, endColor, this.FadeOutTime, Ease.Linear);
         }
     }
 }

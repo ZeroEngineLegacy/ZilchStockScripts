@@ -1,11 +1,12 @@
-DataContent = 
+[Version:1]
+DataContent 
 {
-	DataBuilder = 
+	DataBuilder 
 	{
-		string Name = "Game",
-		uint64 ResourceId = 532e2a5971d1b1ee,
-		string LoaderType = "GameSession",
-		uint Version = 0,
-		bool ShowInEditor = true,
-	},
-},
+		var Name = "Game"
+		var ResourceId = 0x532e2a5971d1b1ee
+		var LoaderType = "GameSession"
+		var Version = 0
+		var ShowInEditor = true
+	}
+}

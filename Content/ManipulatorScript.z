@@ -31,12 +31,12 @@ class ManipulatorScript : ZilchComponent
     {
         // We only operator on a component with a camera viewport,
         // grab the viewport from that component
-        var viewport = this.Camera.Viewport;
+        var space = this.Owner.Space;
         
-        Zero.Connect(viewport, Events.MouseMove, this.OnMouseMove);
-        Zero.Connect(viewport, Events.LeftMouseDown, this.OnLeftMouseDown);
-        Zero.Connect(viewport, Events.LeftMouseUp, this.OnLeftMouseUp);
-        Zero.Connect(viewport, Events.MouseScroll, this.OnMouseScroll);
+        Zero.Connect(space, Events.MouseMove, this.OnMouseMove);
+        Zero.Connect(space, Events.LeftMouseDown, this.OnLeftMouseDown);
+        Zero.Connect(space, Events.LeftMouseUp, this.OnLeftMouseUp);
+        Zero.Connect(space, Events.MouseScroll, this.OnMouseScroll);
         Zero.Connect(Zero.Keyboard, Events.KeyDown, this.OnKeyDown);
     }
     
@@ -74,7 +74,7 @@ class ManipulatorScript : ZilchComponent
         var selectedPoint = Real3(0.0, 0.0, 0.0);
         
         // Find the object we clicked, if there wasn't one don't do anything
-        var castResults = this.Space.PhysicsSpace.CastRayResults(ray, 1);
+        var castResults = this.Space.PhysicsSpace.CastRay(ray, 1);
         foreach(var castResult in castResults)
         {
             // Save the object we hit
@@ -155,18 +155,18 @@ class ManipulatorScript : ZilchComponent
     function CreateManipulator(obj : Cog, point : Real3)
     {
         // Build a new manipulator joint attached by the picked point and save it
-        var jointCreator = Zero.JointBuilder.CreateInstance();
-        jointCreator.ConnectToWorld = true;
-        var cog = jointCreator.AttachWorld(obj,obj,point,"ManipulatorJoint");
+        var jointCreator = JointCreator();
+        jointCreator.AttachToWorld = true;
+        var cog = jointCreator.CreateWorldPoints(obj, obj, "ManipulatorJoint", point, point);
         this.ManipulatorJoint = cog.ManipulatorJoint;
     }
         
     function CreatePhyGun(obj : Cog, point : Real3)
     {
         // Build a new manipulator joint attached by the picked point and save it
-        var jointCreator = Zero.JointBuilder.CreateInstance();
-        jointCreator.ConnectToWorld = true;
-        var cog = jointCreator.AttachWorld(obj,obj,point,"PhyGunJoint");
+        var jointCreator = JointCreator();
+        jointCreator.AttachToWorld = true;
+        var cog = jointCreator.CreateWorldPoints(obj, obj, "PhyGunJoint", point, point);
         this.PhyGunJoint = cog.PhyGunJoint;
     }
         

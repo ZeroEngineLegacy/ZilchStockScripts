@@ -1,22 +1,27 @@
-Cog = 
+[Version:1]
+Cog 
 {
-	Project = 
+	var Name = ""
+	ProjectSettings 
 	{
-		string ProjectName = "ZilchStockScripts",
-		string ProjectOwner = "",
-		string DefaultLevel = "Level",
-		string ProjectSpace = "Space",
-		string ProjectFolder = "C:\Users\ZeroDavis\Desktop\Zero\ZeroSummerBranch\ZilchStockScripts",
-		uint ProjectEngineRevision = 13221,
-		bool AutoTakeProjectScreenshot = true,
-	},
-	EditorSettings = 
+		var ProjectName = "ZilchStockScripts"
+		var ProjectOwner = ""
+		var DefaultLevel = "Level"
+		var ProjectSpace = "Space"
+		var ProjectEngineRevision = 16582
+		var AutoTakeProjectScreenshot = true
+		var Guid = 0x595a70cdcd556d36
+	}
+	EditorSettings 
 	{
-		EditorMode EditorMode = Mode2D,
-		bool ViewCube = true,
-		float ViewCubeViewportSize = 150,
-		ScriptReloadMethod ScriptReloadEditor = ReInitializeObjects,
-		ScriptReloadMethod ScriptReloadGame = PatchObjects,
-		bool AutoUpdateContentChanges = true,
-	},
-},
+		var ViewCube = true
+		var ViewCubeSize = 0.150000006
+		var ScriptReloadEditor = ScriptReloadMethod.ReInitializeObjects
+		var ScriptReloadGame = ScriptReloadMethod.PatchObjects
+		var AutoUpdateContentChanges = true
+	}
+	ProjectConfig 
+	{
+		var EditorMode = EditorMode.Mode3D
+	}
+}

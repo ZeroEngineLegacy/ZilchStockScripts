@@ -1,31 +1,43 @@
-//A simple helper class that iterates through all contacts
-//with a collider and debug draws them.
+/************************************************************************************************************/
+/* Copyright 2016 DigiPen, All Rights Reserved                                                              */
+/* Last Update: 1/3/2016                                                                                    */
+/* Author: Zero Engine Team                                                                                 */
+/* Last updated by: Arend Danielek                                                                          */
+/* Class: ContactDebugDraw                                                                                  */
+/* Brief: A simple helper class that iterates through all contacts with a collider and debug draws them.    */
+/************************************************************************************************************/
+
 class ContactDebugDraw : ZilchComponent
 {
+    // We depend on having a collider (in order to have collision to draw)
+    [Dependency]
+    var Collider : Collider;
+    
     // Whether or not to scale the normal from the contact
     // by the magnitude of the impulse.
     [Property]
     var ScaleByMagnitude : Boolean = false;
+    
     // Do we always draw on top?
     [Property]
     var OnTop : Boolean = false;
+    
     // Do we draw an arrow head?
     [Property]
     var ArrowHead : Boolean = false;
+    
     // How big to make the arrow head we draw
     [Property]
     var ArrowHeadSize : Real = 0.25;
+    
     // A scalar to artifically increase the size of the normal being drawn.
     // Useful to scale up/down very small/large impulses.
     [Property]
     var NormalScalar : Real = 1.0;
+    
     // The color to draw the normal with.
     [Property]
     var Color : Real4 = Real4(1.0, 1.0, 1.0, 1.0);
-    
-    // We depend on having a collider (in order to have collision to draw)
-    [Dependency]
-    var Collider : Collider = null;
     
     function Initialize(init : CogInitializer)
     {
@@ -52,13 +64,13 @@ class ContactDebugDraw : ZilchComponent
                 }
                 
                 // Create the debug line
-                var line = new DebugLine();
-                line.Start(point).End(point + normal).OnTop(this.OnTop).Float4Color(this.Color);
+                var line = DebugLine(point, point + normal);
+                line.OnTop = this.OnTop;
+                line.Color = this.Color;
+                DebugDraw.Add(line);
+                
                 if(this.ArrowHead)
-                {
-                    line.HeadSize(this.ArrowHeadSize);
-                }
-                line.Draw();
+                    line.HeadSize = this.ArrowHeadSize;
             }
         }
     }

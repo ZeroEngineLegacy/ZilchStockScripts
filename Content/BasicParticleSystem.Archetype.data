@@ -1,79 +1,76 @@
-Cog = 
+[Version:1]
+Cog 
 {
-	LinkId = 
+	var Name = "BasicParticleEffect"
+	var LinkId = 1
+	Transform 
 	{
-		uint Id = 1,
-	},
-	Named = 
+		var Translation = Real3{-5.33764362, 17.4953098, -1.92134094}
+		var Scale = Real3{1, 1, 1}
+		var Rotation = Quaternion{0, 0, 0, 1}
+	}
+	SpriteParticleSystem 
 	{
-		string Name = "BasicParticleEffect",
-	},
-	Archetyped = 
+		var Visible = true
+		var ViewCulling = true
+		var VisibilityEvents = true
+		var Material = "582c575af53d18c9:AlphaSprite"
+		var ChildSystem = false
+		var SystemSpace = SystemSpace.WorldSpace
+		var DrawOrder = 0
+		var Tint = Real4{1, 1, 1, 1}
+		var WarmUpTime = 0
+		var GeometryMode = ParticleGeometryMode.Billboarded
+		var SortMode = ParticleSortMode.Youngest
+		var ParticleAnimation = ParticleAnimationMode.Single
+		var SpriteSource = "5586f579ca73ecc2:SquareBordered"
+		var VelocityScale = 1
+		var LengthScale = 1
+		var SystemSize = Real3{4, 4, 4}
+		var PreviewInEditor = false
+	}
+	SphericalParticleEmitter 
 	{
-		string Name = "532d9d13f92dbcf9:BasicParticleSystem",
-	},
-	Transform = 
+		var Active = true
+		var EmitCount = 0
+		var EmitDelay = 0
+		var EmitRate = 10
+		var EmitVariance = 0
+		var EmitRateSoftStartTime = 0
+		var Size = 1
+		var SizeVariance = 0.5
+		var Lifetime = 1
+		var LifetimeVariance = 0.200000003
+		var Spin = 0
+		var SpinVariance = 50
+		var RandomSpin = true
+		var Fill = 1
+		var EmitterVelocityPercent = 0
+		var StartVelocity = Real3{0, 0, 0}
+		var RandomVelocity = Real3{2, 2, 2}
+		var TangentVelocity = Real3{0, 0, 0}
+		var EmitterSize = Real3{0, 0, 0}
+		var FastMovingEmitter = false
+	}
+	LinearParticleAnimator 
 	{
-		Vec3 Translation = [13.3544, 8.31822, 0],
-		Vec3 Scale = [1, 1, 1],
-		Quat Rotation = [0, 0, 0, 1],
-	},
-	SpriteParticleSystem = 
+		var Force = Real3{0, 0, 0}
+		var RandomForce = Real3{0, 0, 0}
+		var Torque = 0
+		var Growth = 0
+		var Dampening = 0
+		var Twist = Real3{0, 0, 0}
+	}
+	ParticleColorAnimator 
 	{
-		SystemChildMode ChildMode = Independent,
-		SystemSpace SystemSpace = WorldSpace,
-		uint DrawOrder = 0,
-		float WarmUpTime = 0,
-		ParticleGeometry GeometryMode = Billboarded,
-		ParticleRenderMode RenderMode = Blended,
-		ParticleSortMode SortMode = None,
-		string Texture = "4fab71e8bcb7a8ce:DefaultTexture",
-		Vec4 Tint = [1, 1, 1, 1],
-		float VelocityScale = 1,
-		float LengthScale = 1,
-		float MaxParticleSize = 100,
-		Vec3 SystemSize = [4, 4, 4],
-	},
-	SphericalParticleEmitter = 
+		var Color0 = Real4{1, 1, 1, 0}
+		var Color1 = Real4{1, 1, 1, 1}
+		var Color2 = Real4{1, 1, 1, 1}
+		var Color3 = Real4{1, 1, 1, 1}
+		var Color4 = Real4{1, 1, 1, 0}
+	}
+	FadeOut 
 	{
-		bool Active = true,
-		uint EmitCount = 0,
-		float EmitRate = 10,
-		float EmitVariance = 0,
-		float Size = 1,
-		float SizeVariance = 0.5,
-		float Lifetime = 1,
-		float LifetimeVariance = 0.2,
-		float Spin = 0,
-		float SpinVariance = 50,
-		bool RandomSpin = true,
-		float Fill = 1,
-		float EmitterVelocityPercent = 0,
-		Vec3 StartVelocity = [0, 0, 0],
-		Vec3 RandomVelocity = [2, 2, 2],
-		Vec3 TangentVelocity = [0, 0, 0],
-		Vec3 EmitterSize = [0, 0, 0],
-		bool FastMovingEmitter = false,
-	},
-	LinearParticleAnimator = 
-	{
-		Vec3 Force = [0, 0, 0],
-		Vec3 RandomForce = [0, 0, 0],
-		float Torque = 0,
-		float Growth = 0,
-		float Dampening = 0,
-		Vec3 Twist = [0, 0, 0],
-	},
-	ParticleColorAnimator = 
-	{
-		Vec4 Color0 = [1, 1, 1, 0],
-		Vec4 Color1 = [1, 1, 1, 1],
-		Vec4 Color2 = [1, 1, 1, 1],
-		Vec4 Color3 = [1, 1, 1, 1],
-		Vec4 Color4 = [1, 1, 1, 0],
-	},
-	FadeOut = 
-	{
-		float FadeOutTime = 1,
-	},
-},
+		var FadeOutTime = 1
+	}
+}

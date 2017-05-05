@@ -1,8 +1,0 @@
-TextContent = 
-{
-	ZilchScriptBuilder = 
-	{
-		string Name = "SimplePathFollower",
-		uint64 ResourceId = 532e2ab87b2a8078,
-	},
-},

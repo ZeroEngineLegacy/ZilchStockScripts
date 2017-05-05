@@ -4,7 +4,7 @@ class HudCreator : ZilchComponent
     [Property]
     var HudLevel : Level = null;
     [Property]
-    var SpaceArchetype : Archetype = Archetype.Find("Space");
+    var SpaceArchetype : Archetype = Archetype.Space;
     
     // Store the space where our Hud is so that we can access and destroy it
     var HudSpace : Space = null;

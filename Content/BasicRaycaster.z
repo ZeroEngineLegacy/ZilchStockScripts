@@ -32,7 +32,7 @@ class BasicRaycaster : ZilchComponent
         ray.Direction = Math.Normalize(ray.Direction);
         
         // Do a raycast for only 1 result
-        var castResultRange = this.Space.PhysicsSpace.CastRayResults(ray, 1);
+        var castResultRange = this.Space.PhysicsSpace.CastRay(ray, 1);
         
         // Iterate through all results
         foreach(var castResult in castResultRange)
@@ -61,8 +61,7 @@ class BasicRaycaster : ZilchComponent
     
     function DrawArrow(start : Real3, end : Real3)
     {
-        var line = DebugLine();
-        line.Start(start).End(end).HeadSize(this.HeadSize).Float4Color(this.DrawColor).OnTop(this.OnTop);
-        line.Draw();
+        var line = DebugLine(start, end) {HeadSize = this.HeadSize, Color = this.DrawColor, OnTop = this.OnTop};
+        DebugDraw.Add(line);
     }
 }

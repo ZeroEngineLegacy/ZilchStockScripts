@@ -48,7 +48,7 @@ class CameraGroupFocus : ZilchComponent
             return;
         }
         
-        this.FirstTarget.Required = false;
+        //this.FirstTarget.Required = false;
         var firstTarget = this.FirstTarget.Cog;
         if(firstTarget != null)
         {
@@ -78,7 +78,7 @@ class CameraGroupFocus : ZilchComponent
         var cameraPos = myTransform.Translation;
         
         // Offset the center of the aabb
-        var aabbCenter = aabb.GetCenter() + this.PositionOffset;
+        var aabbCenter = (aabb.Max + aabb.Min) / 2.0 + this.PositionOffset;
         // Project the aabb's center onto the plane the camera is currently on
         var offset = aabbCenter - cameraPos;
         var projectedCameraDistance = Math.Dot(offset, this.PlaneNormal);
@@ -95,7 +95,7 @@ class CameraGroupFocus : ZilchComponent
         // Take the lerped camera position and lerp a new position for the distance
         
         // Project the average position onto the plane
-        var extents = aabb.GetExtents() * 2.0;
+        var extents = aabb.Extents;
         var aabbMax = Math.Max(extents.X, extents.Z * 2.0);
         aabbMax = Math.Max(aabbMax, extents.Y);
         aabbMax = Math.Clamp(aabbMax, this.MinDistance, 200.0);

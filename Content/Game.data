@@ -1,28 +1,24 @@
-GameSession = 
+[Version:1]
+GameSession 
 {
-	LinkId = 
+	var Name = ""
+	var LinkId = 1
+	Viewports 
 	{
-		uint Id = 1,
-	},
-	Archetyped = 
+	}
+	DefaultGameSetup 
 	{
-		string Name = "532e2a5971d1b1ee:Game",
-	},
-	Viewports = 
+		var StartingSpace = "532e2a5971d21139:Space"
+		var StartingLevel = "532e2a5971d1e24d:Level"
+		var LoadEditingLevel = true
+	}
+	CameraViewports 
 	{
-	},
-	DefaultGameSetup = 
+	}
+	ZilchState 
 	{
-		string StartingSpaceName = "532e2a5971d21139:Space",
-		string StartingLevelName = "532e2a5971d1e24d:Level",
-	},
-	CameraViewports = 
+	}
+	RunUnitTests 
 	{
-	},
-	ZilchState = 
-	{
-	},
-	RunUnitTests = 
-	{
-	},
-},
+	}
+}
