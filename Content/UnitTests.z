@@ -71,6 +71,7 @@ class UnitTests : ZilchComponent
         {
             this.GameSession.Quit();
             Zero.Editor.EditGameSession.Quit();
+            Zero.Engine.Terminate();
             return;
         }
         
