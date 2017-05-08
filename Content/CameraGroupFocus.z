@@ -158,7 +158,7 @@ class CameraGroupFocus : ZilchComponent
         {
             obj = this.Objects.Get(i);
             pos = obj.Transform.WorldTranslation;
-            aabb.Expand(pos);
+            aabb = Aabb.Expand(aabb, pos);
         }
         return aabb;
     }
