@@ -39,6 +39,7 @@ class UnitTests : ZilchComponent
     function Initialize(init : CogInitializer)
     {
         Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
+        Console.WriteLine("UnitTests initialized");
     }
     
     function OnLogicUpdate(event : UpdateEvent)
@@ -51,7 +52,7 @@ class UnitTests : ZilchComponent
         if(this.GameSession.RunUnitTests.RunTests == true)
         {
             Zero.Disconnect(this.Space, Events.LogicUpdate, this);
-            
+            Console.WriteLine("Start screenshots");
             this.StartScreenShots();
         }
     }
@@ -67,6 +68,7 @@ class UnitTests : ZilchComponent
     
     function ScreenshotActions()
     {
+        Console.WriteLine("ScreenshotActions `this.ScreenShotsTaken` of `this.ScreenShotsToTake`");
         if (this.ScreenShotsTaken >= this.ScreenShotsToTake)
         {
             this.GameSession.Quit();
@@ -96,7 +98,7 @@ class UnitTests : ZilchComponent
         {
             //this.Owner.CameraViewport.Viewport.ScreenCapture(filePath);
         }
-        
+        Console.WriteLine("Screenshot `this.ScreenShotsTaken` of `this.ScreenShotsToTake`");
         ++this.ScreenShotsTaken;
     }
 }
