@@ -121,11 +121,11 @@ class PlatformerCharacterController : ZilchComponent
         // We want to set the amount of force we can apply to reach our desired maximum speed
         // We're multiplying by the object's mass so that the character can easily be scaled
         // without having to re-adjust MovePower
-        var moveForce = this.MovePower * this.Owner.RigidBody.Mass;
+        var moveImpulse = this.MovePower * this.Owner.RigidBody.Mass;
         // Apply the control scalar (air control / traction / etc...)
-        moveForce *= controlScalar;
+        moveImpulse *= controlScalar;
         // Set the final force
-        this.Owner.DynamicMotor.MaxMoveForce = moveForce;
+        this.Owner.DynamicMotor.MaxMoveImpulse = moveImpulse;
         
         // Get our current max speed
         var maxSpeed = this.GetMaxSpeed();
