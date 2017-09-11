@@ -1,10 +1,9 @@
 [Version:1]
 Level 
 {
-	Cog 
+	Cog [ContextId:1]
 	{
 		var Name = "LevelSettings"
-		var LinkId = 1
 		GravityEffect 
 		{
 			var Active = false
@@ -25,19 +24,18 @@ Level
 			var AngularDrag = 0
 		}
 	}
-	Cog 
+	Cog [ContextId:2]
 	{
 		var Name = "Renderer"
-		var LinkId = 2
 		ForwardRenderer 
 		{
 			var EditorDebugDraw = true
 			var GameDebugDraw = true
 			var RenderDiffuse = true
 			var RenderSpecular = true
-			var RenderSkybox = true
+			var RenderSkybox = false
 			var Skybox = "5822dec85e380cf1:SimpleSkybox"
-			var ClearColor = Real4{0, 0, 0, 1}
+			var ClearColor = Real4{0, 0, 0, 0}
 			var DirectLighting = true
 			var IndirectLighting = true
 			var IndirectIntensity = 1
@@ -52,22 +50,21 @@ Level
 				var UpdatePathOnCogChange = true
 				var UpdateCogOnInitialize = true
 				var ResolvedNullErrorOccurred = false
-				var ResolvedCog = 4294967293
+				var Cog = 4294967293
 				var PathPreference0 = CogPathPreference.CogRelative
 				var PathPreference1 = CogPathPreference.SpaceRelative
 				var PathPreference2 = CogPathPreference.Absolute
 			}
 		}
 	}
-	Cog 
+	Cog [ContextId:3]
 	{
 		var Name = "EditorCamera"
-		var LinkId = 3
 		Transform 
 		{
-			var Translation = Real3{-4.77020979, 14.4550257, 44.5545273}
+			var Translation = Real3{-7.13221598, 9.75477123, 45.0697975}
 			var Scale = Real3{1, 1, 1}
-			var Rotation = Quaternion{-0.0871557519, -1.09695906e-08, -1.90484961e-09, 0.99619478}
+			var Rotation = Quaternion{-0.0348875336, -0.0261609908, -0.000913561846, 0.999048412}
 		}
 		Camera 
 		{
@@ -82,8 +79,8 @@ Level
 			var ControlMode = ControlMode.Orbit
 			var Previous3DMode = ControlMode.Orbit
 			var LookDistance = 45.2418556
-			var VerticalAngle = 0.17453292
-			var HorizontalAngle = 0
+			var VerticalAngle = 0.0698131546
+			var HorizontalAngle = 0.0523598343
 			var LookTarget = Real3{-4.77020979, 6.59885979, 0}
 			var MoveSensitivity = 1
 		}
@@ -91,11 +88,7 @@ Level
 		{
 			var RenderInEditor = true
 			var RenderInGame = false
-			var RenderToViewport = true
-			var ForwardViewportEvents = false
 			var RenderOrder = 0
-			var NormalizedSize = Real2{1, 1}
-			var NormalizedOffset = Real2{0, 0}
 			var CameraPath = CogPath
 			{
 				var Path = "."
@@ -106,7 +99,7 @@ Level
 				var UpdatePathOnCogChange = true
 				var UpdateCogOnInitialize = true
 				var ResolvedNullErrorOccurred = false
-				var ResolvedCog = 3
+				var Cog = 3
 				var PathPreference0 = CogPathPreference.CogRelative
 				var PathPreference1 = CogPathPreference.SpaceRelative
 				var PathPreference2 = CogPathPreference.Absolute
@@ -121,20 +114,23 @@ Level
 				var UpdatePathOnCogChange = true
 				var UpdateCogOnInitialize = true
 				var ResolvedNullErrorOccurred = false
-				var ResolvedCog = 2
+				var Cog = 2
 				var PathPreference0 = CogPathPreference.CogRelative
 				var PathPreference1 = CogPathPreference.SpaceRelative
 				var PathPreference2 = CogPathPreference.Absolute
 			}
-			var Resolution = Real2{1280, 720}
+			var ResolutionOrAspect = Integer2{1920, 1080}
+			var RenderToViewport = true
+			var ForwardViewportEvents = false
 			var ViewportScaling = ViewportScaling.Fill
 			var MarginColor = Real4{0, 0, 0, 1}
+			var NormalizedSize = Real2{1, 1}
+			var NormalizedOffset = Real2{0, 0}
 		}
 	}
-	Cog 
+	Cog [ContextId:4]
 	{
 		var Name = "Camera"
-		var LinkId = 4
 		Transform 
 		{
 			var Translation = Real3{-3.61034989, 0, 40}
@@ -153,11 +149,7 @@ Level
 		{
 			var RenderInEditor = false
 			var RenderInGame = true
-			var RenderToViewport = true
-			var ForwardViewportEvents = false
 			var RenderOrder = 1
-			var NormalizedSize = Real2{1, 1}
-			var NormalizedOffset = Real2{0, 0}
 			var CameraPath = CogPath
 			{
 				var Path = "."
@@ -168,7 +160,7 @@ Level
 				var UpdatePathOnCogChange = true
 				var UpdateCogOnInitialize = true
 				var ResolvedNullErrorOccurred = false
-				var ResolvedCog = 4
+				var Cog = 4
 				var PathPreference0 = CogPathPreference.CogRelative
 				var PathPreference1 = CogPathPreference.SpaceRelative
 				var PathPreference2 = CogPathPreference.Absolute
@@ -183,14 +175,18 @@ Level
 				var UpdatePathOnCogChange = true
 				var UpdateCogOnInitialize = true
 				var ResolvedNullErrorOccurred = false
-				var ResolvedCog = 2
+				var Cog = 2
 				var PathPreference0 = CogPathPreference.CogRelative
 				var PathPreference1 = CogPathPreference.SpaceRelative
 				var PathPreference2 = CogPathPreference.Absolute
 			}
-			var Resolution = Real2{1280, 720}
+			var ResolutionOrAspect = Integer2{1920, 1080}
+			var RenderToViewport = true
+			var ForwardViewportEvents = false
 			var ViewportScaling = ViewportScaling.Fill
 			var MarginColor = Real4{0, 0, 0, 1}
+			var NormalizedSize = Real2{1, 1}
+			var NormalizedOffset = Real2{0, 0}
 		}
 		ManipulatorScript 
 		{
@@ -213,7 +209,7 @@ Level
 				var UpdatePathOnCogChange = true
 				var UpdateCogOnInitialize = true
 				var ResolvedNullErrorOccurred = false
-				var ResolvedCog = 5
+				var Cog = 5
 				var PathPreference0 = CogPathPreference.CogRelative
 				var PathPreference1 = CogPathPreference.SpaceRelative
 				var PathPreference2 = CogPathPreference.Absolute
@@ -238,10 +234,9 @@ Level
 			var MouseTrapped = false
 		}
 	}
-	Cog 
+	Cog [ContextId:6]
 	{
 		var Name = "HierarchySpline"
-		var LinkId = 6
 		Transform 
 		{
 			var Translation = Real3{-9.72745991, 0, 0}
@@ -282,17 +277,16 @@ Level
 		HierarchySpline 
 		{
 			var Closed = true
-			var SplineType = SplineType.CatmulRom
+			var SplineType = SplineType.BSpline
 			var Error = 0.00999999978
 			var DebugDrawSpline = true
 			var SplineColor = Real4{0, 0, 0, 1}
 		}
 		Hierarchy 
 		{
-			Cog 
+			Cog [ContextId:7]
 			{
 				var Name = "ControlPoint"
-				var LinkId = 7
 				Transform 
 				{
 					var Translation = Real3{-3.87348413, 6.59885979, 0}
@@ -312,10 +306,9 @@ Level
 					var Mesh = "4de0354322b376ae:Sphere"
 				}
 			}
-			Cog 
+			Cog [ContextId:8]
 			{
 				var Name = "ControlPoint"
-				var LinkId = 8
 				Transform 
 				{
 					var Translation = Real3{6.85694456, 6.59885979, 0}
@@ -335,10 +328,9 @@ Level
 					var Mesh = "4de0354322b376ae:Sphere"
 				}
 			}
-			Cog 
+			Cog [ContextId:9]
 			{
 				var Name = "ControlPoint"
-				var LinkId = 9
 				Transform 
 				{
 					var Translation = Real3{10.3511896, -2.13270473, 0.277770996}
@@ -358,10 +350,9 @@ Level
 					var Mesh = "4de0354322b376ae:Sphere"
 				}
 			}
-			Cog 
+			Cog [ContextId:10]
 			{
 				var Name = "ControlPoint"
-				var LinkId = 10
 				Transform 
 				{
 					var Translation = Real3{20.5850563, 1.7336483, 0.277770996}
@@ -381,10 +372,9 @@ Level
 					var Mesh = "4de0354322b376ae:Sphere"
 				}
 			}
-			Cog 
+			Cog [ContextId:11]
 			{
 				var Name = "ControlPoint"
-				var LinkId = 11
 				Transform 
 				{
 					var Translation = Real3{20.5850563, -10.409976, 0.277770996}
@@ -404,10 +394,9 @@ Level
 					var Mesh = "4de0354322b376ae:Sphere"
 				}
 			}
-			Cog 
+			Cog [ContextId:12]
 			{
 				var Name = "ControlPoint"
-				var LinkId = 12
 				Transform 
 				{
 					var Translation = Real3{1.52974892, -10.409976, 0.277770996}
@@ -427,10 +416,9 @@ Level
 					var Mesh = "4de0354322b376ae:Sphere"
 				}
 			}
-			Cog 
+			Cog [ContextId:13]
 			{
 				var Name = "ControlPoint"
-				var LinkId = 13
 				Transform 
 				{
 					var Translation = Real3{-6.66089249, 1.50320625, 0.277770996}
@@ -452,10 +440,9 @@ Level
 			}
 		}
 	}
-	Cog 
+	Cog [ContextId:5]
 	{
 		var Name = "FollowCube"
-		var LinkId = 5
 		Transform 
 		{
 			var Translation = Real3{-1.3635, 0, 0}
@@ -496,7 +483,7 @@ Level
 		Orientation 
 		{
 			var GlobalUp = Real3{0, 1, 0}
-			var LocalOrientationBasis = Quaternion{0, 0, 0, 1}
+			var LocalOrientationBasis = Quaternion{0, 1, 0, -0}
 			var DefaultBases = OrientationBases.ForwardZUpY
 		}
 		BasicRaycaster 
@@ -520,7 +507,7 @@ Level
 				var UpdatePathOnCogChange = true
 				var UpdateCogOnInitialize = true
 				var ResolvedNullErrorOccurred = false
-				var ResolvedCog = 6
+				var Cog = 6
 				var PathPreference0 = CogPathPreference.CogRelative
 				var PathPreference1 = CogPathPreference.SpaceRelative
 				var PathPreference2 = CogPathPreference.Absolute
@@ -533,10 +520,9 @@ Level
 			var Direction = 1
 		}
 	}
-	Cog 
+	Cog [ContextId:14]
 	{
 		var Name = "Cube"
-		var LinkId = 14
 		Transform 
 		{
 			var Translation = Real3{2.3060801, 6.59885979, 0}
@@ -575,10 +561,9 @@ Level
 			var HalfSize = Real3{0.5, 0.5, 0.5}
 		}
 	}
-	Cog 
+	Cog [ContextId:15]
 	{
 		var Name = "Cube"
-		var LinkId = 15
 		Transform 
 		{
 			var Translation = Real3{8.9491396, 0.677879989, 0}
@@ -617,10 +602,9 @@ Level
 			var HalfSize = Real3{0.5, 0.5, 0.5}
 		}
 	}
-	Cog 
+	Cog [ContextId:16]
 	{
 		var Name = "Cube"
-		var LinkId = 16
 		Transform 
 		{
 			var Translation = Real3{5.69982004, 0.677879989, 0}
@@ -659,10 +643,9 @@ Level
 			var HalfSize = Real3{0.5, 0.5, 0.5}
 		}
 	}
-	Cog 
+	Cog [ContextId:17]
 	{
 		var Name = "Cube"
-		var LinkId = 17
 		Transform 
 		{
 			var Translation = Real3{5.69982004, -7.1926899, 0}
@@ -701,10 +684,9 @@ Level
 			var HalfSize = Real3{0.5, 0.5, 0.5}
 		}
 	}
-	Cog 
+	Cog [ContextId:18]
 	{
 		var Name = "Cube"
-		var LinkId = 18
 		Transform 
 		{
 			var Translation = Real3{-13.0017996, -4.95426989, 0}
@@ -743,10 +725,9 @@ Level
 			var HalfSize = Real3{0.5, 0.5, 0.5}
 		}
 	}
-	Cog 
+	Cog [ContextId:19]
 	{
 		var Name = "Sphere"
-		var LinkId = 19
 		Transform 
 		{
 			var Translation = Real3{-4.77020979, 8.83728027, 0}
@@ -782,13 +763,12 @@ Level
 			var Material = "4de020863e872da8:DefaultPhysicsMaterial"
 			var CollisionGroup = "4e740859314e5515:DefaultGroup"
 			var Offset = Real3{0, 0, 0}
-			var Radius = 1
+			var Radius = 0.5
 		}
 	}
-	Cog 
+	Cog [ContextId:20]
 	{
 		var Name = "Sphere"
-		var LinkId = 20
 		Transform 
 		{
 			var Translation = Real3{-14.2292995, 8.83728027, 0}
@@ -824,13 +804,12 @@ Level
 			var Material = "4de020863e872da8:DefaultPhysicsMaterial"
 			var CollisionGroup = "4e740859314e5515:DefaultGroup"
 			var Offset = Real3{0, 0, 0}
-			var Radius = 1
+			var Radius = 0.5
 		}
 	}
-	Cog 
+	Cog [ContextId:21]
 	{
 		var Name = "Sphere"
-		var LinkId = 21
 		Transform 
 		{
 			var Translation = Real3{-9.17479992, -8.56462002, 0}
@@ -866,7 +845,7 @@ Level
 			var Material = "4de020863e872da8:DefaultPhysicsMaterial"
 			var CollisionGroup = "4e740859314e5515:DefaultGroup"
 			var Offset = Real3{0, 0, 0}
-			var Radius = 1
+			var Radius = 0.5
 		}
 	}
 }

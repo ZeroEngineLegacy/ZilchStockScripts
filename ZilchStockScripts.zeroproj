@@ -8,7 +8,6 @@ Cog
 		var ProjectOwner = ""
 		var DefaultLevel = "Level"
 		var ProjectSpace = "Space"
-		var ProjectEngineRevision = 17213
 		var AutoTakeProjectScreenshot = true
 		var Guid = 0x595a70cdcd556d36
 	}
@@ -16,12 +15,20 @@ Cog
 	{
 		var ViewCube = true
 		var ViewCubeSize = 0.150000006
-		var ScriptReloadEditor = ScriptReloadMethod.ReInitializeObjects
-		var ScriptReloadGame = ScriptReloadMethod.PatchObjects
 		var AutoUpdateContentChanges = true
 	}
 	ProjectConfig 
 	{
 		var EditorMode = EditorMode.Mode3D
+	}
+	LauncherProjectInfo 
+	{
+		var Tags = ""
+		var ExperimentalBranchName = ""
+		var MajorVersion = 1
+		var MinorVersion = 0
+		var PatchVersion = 0
+		var RevisionId = 260
+		var ShortChangeSet = "ed43c68344f1"
 	}
 }
